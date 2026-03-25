@@ -18,12 +18,17 @@ A terminal-based pomodoro timer with ASCII tomato art, built with Python curses.
 
 ## Installation
 
+### Homebrew (recommended)
+
 ```bash
-# Clone the repository
+brew install uherman/tomodoro/tomodoro
+```
+
+### From source
+
+```bash
 git clone https://github.com/uherman/tomodoro.git
 cd tomodoro
-
-# Install in editable mode
 pip install -e .
 ```
 
