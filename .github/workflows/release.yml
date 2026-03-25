@@ -36,7 +36,7 @@ jobs:
             --hidden-import tomodoro.brightness \
             --hidden-import tomodoro.keyboard_backlight \
             --hidden-import tomodoro.sounds \
-            tomodoro/__main__.py
+            entry.py
 
       - name: Rename artifact
         run: mv dist/tomodoro dist/tomodoro-macos
