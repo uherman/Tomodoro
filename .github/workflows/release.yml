@@ -1,0 +1,67 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyinstaller
+
+      - name: Build binary
+        run: |
+          pyinstaller \
+            --onefile \
+            --name tomodoro \
+            --add-data "tomodoro/sounds:tomodoro/sounds" \
+            --hidden-import tomodoro \
+            --hidden-import tomodoro.ui \
+            --hidden-import tomodoro.timer \
+            --hidden-import tomodoro.config \
+            --hidden-import tomodoro.stats \
+            --hidden-import tomodoro.art \
+            --hidden-import tomodoro.brightness \
+            --hidden-import tomodoro.keyboard_backlight \
+            --hidden-import tomodoro.sounds \
+            tomodoro/__main__.py
+
+      - name: Rename artifact
+        run: mv dist/tomodoro dist/tomodoro-macos
+
+      - name: Generate version tag
+        id: version
+        run: |
+          VERSION="v1.0.0-build.${{ github.run_number }}"
+          echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Tomodoro ${{ steps.version.outputs.tag }}
+          body: |
+            Automated build from commit ${{ github.sha }}.
+
+            ### Download
+            Download `tomodoro-macos` below and run:
+            ```bash
+            chmod +x tomodoro-macos
+            ./tomodoro-macos
+            ```
+          files: dist/tomodoro-macos
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
