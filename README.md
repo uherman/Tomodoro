@@ -20,7 +20,7 @@ A terminal-based pomodoro timer with ASCII tomato art, built with Python curses.
 
 ```bash
 # Clone the repository
-git clone https://github.com/tibohbr/tomodoro.git
+git clone https://github.com/uherman/tomodoro.git
 cd tomodoro
 
 # Install in editable mode
