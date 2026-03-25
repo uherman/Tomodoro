@@ -469,7 +469,7 @@ class App:
             ("long_break_minutes", "Long Break (min)", 1, 60),
             ("sessions_before_long_break", "Sessions Before Long Break", 1, 10),
             ("daily_goal", "Daily Goal (sessions)", 1, 20),
-            ("sound_enabled", "Sound (terminal bell)", 0, 1),
+            ("sound_enabled", "Sound", 0, 1),
         ]
 
     def _draw_settings(self, win) -> None:
